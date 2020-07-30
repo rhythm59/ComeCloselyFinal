@@ -1,0 +1,7 @@
+{
+  "name": "ComeClosely",
+  "displayName": "ComeClosely",
+  "ios": {
+    "bundleIdentifier": "com.comeclosely"
+  }
+}

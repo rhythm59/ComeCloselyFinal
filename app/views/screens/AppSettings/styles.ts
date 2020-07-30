@@ -1,0 +1,101 @@
+import {StyleSheet} from 'react-native';
+
+export default StyleSheet.create({
+  navigationBar: {
+    width: '100%',
+    height: 70,
+    alignSelf: 'flex-start',
+    justifyContent: 'center',
+  },
+  navigationText: {
+    width: '100%',
+    marginBottom: -20,
+    textAlign: 'center',
+    fontSize: 30,
+    fontFamily: 'Gilroy-Bold',
+    color: '#515C6F',
+  },
+  lineView: {
+    width: '85%',
+    height: 1,
+    alignSelf: 'center',
+    backgroundColor: '#9CA5B2',
+    justifyContent: 'center',
+  },
+  headerView: {
+    width: '85%',
+    aspectRatio: 7,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignContent: 'center',
+  },
+  headerImageView: {
+    height: '55%',
+    aspectRatio: 1,
+    alignSelf: 'center',
+  },
+  headerImage: {
+    height: '100%',
+    width: '100%',
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  headerTxt: {
+    marginLeft: 10,
+    textAlign: 'center',
+    fontSize: 17,
+    marginTop: '2%',
+    fontFamily: 'Gilroy-Bold',
+    alignSelf: 'center',
+  },
+  cellView: {
+    width: '85%',
+    aspectRatio: 7,
+    alignSelf: 'center',
+    flexDirection: 'row',
+  },
+  cellLeftImage: {
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  cellRightImage: {
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  cellTxt: {
+    flex: 1,
+    textAlign: 'left',
+    color: '#FF2485',
+    fontSize: 15,
+    fontFamily: 'Gilroy-Medium',
+    alignSelf: 'center',
+  },
+  cellRightView: {
+    height: '100%',
+    aspectRatio: 1,
+    right: 10,
+    alignSelf: 'flex-end',
+    flexDirection: 'row-reverse',
+  },
+  container: {
+    flex: 1,
+  },
+  closeView: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    height: '40%',
+    aspectRatio: 1,
+    right: 15,
+  },
+  closeImg: {
+    height: '90%',
+    width: '90%',
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    tintColor: '#515C6F',
+  },
+});

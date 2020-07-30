@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "611597288784",
+    "firebase_url": "https://comeclosely-71c7c.firebaseio.com",
+    "project_id": "comeclosely-71c7c",
+    "storage_bucket": "comeclosely-71c7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611597288784:android:ee287ad56b628abee91855",
+        "android_client_info": {
+          "package_name": "com.comeclosely"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611597288784-s76nt46prmfktpe6uja11jvnt2a8ji67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiFkMyl9IYEl1sC0Xz1IkFTxcZrz3y9XI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611597288784-s76nt46prmfktpe6uja11jvnt2a8ji67.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

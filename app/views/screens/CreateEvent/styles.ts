@@ -1,0 +1,195 @@
+import { StyleSheet } from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+export default StyleSheet.create({
+  mainView: {
+    flex: 1,
+    backgroundColor: '#F8F8F8', 
+  },
+  bgImageView: {
+    width: wp('100%'),
+    height: hp('25%'),
+  },
+  bgImage: {
+    width: wp('100%'),
+    height: hp('25%'),
+    marginTop: 0,
+    resizeMode: 'cover',
+  },
+  overlay: {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    position: 'absolute',
+  },
+  titleView: {
+    height: hp('5%'),
+    marginTop: '10%',
+    flexDirection: 'row',
+    marginLeft: '3%',
+    marginRight: '3%',
+    alignItems: 'center',
+  },
+  title: {
+    color: 'white',
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginLeft: '1%',
+  },
+  closeIconView: {
+    width: wp('3.5%'),
+    height: hp('3%'),
+    resizeMode: 'contain',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    right: 10,
+    marginRight: 10,
+  },
+  closeIcon: {
+    flex: 1,
+    resizeMode: 'contain',
+  },
+  eventsFormMainView: {
+    height: hp('100%'),
+    backgroundColor: '#F8F8F8',
+    marginTop: '-20%',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderWidth: 1,
+    borderColor: '#F8F8F8',
+  },
+  eventsFormMainChildView: {
+    marginLeft: '5%',
+    marginRight: '3%',
+  },
+  fieldWrapper: {
+    width: '100%',
+    height: hp('12%'),
+    marginTop: '5%',
+    alignItems: 'center',
+  },
+  textInput: {
+    backgroundColor: '#FFFFFF',
+  },
+  /* inputCotainer: {
+    width: '100%',
+    height: hp('8%'),
+    marginTop: '5%',
+    alignItems: 'center',
+  },
+  textInputBackground: {
+    backgroundColor: '#FFFFFF',
+  }, */
+  eventTypeView: {
+    marginTop: '8%',
+  },
+  eventTypeText: {
+    color: '#BEBEBE',
+    fontSize: 14,
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  eventTypesView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  dateTimeView: {
+    width: '100%',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    color: '#BEBEBE',
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  fieldWrapperHalf: {
+    width: '45%',
+    height: hp('12%'),
+    marginTop: '5%',
+    color: '#BEBEBE',
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  descriptionTextView: {
+    marginTop: '8%',
+  },
+  descriptionText: {
+    color: '#BEBEBE',
+    fontSize: 14,
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  descriptionView: {
+    marginTop: '5%',
+    width: wp('90%'),
+    height: hp('25%'),
+    borderColor: '#DEDEDE',
+    borderWidth: 1,
+    backgroundColor: 'white',
+    borderRadius: 15,
+  },
+  description: {
+    padding: 20,
+    textAlignVertical: 'top',
+    justifyContent: 'flex-start',
+  },
+  addCoverImageView: {
+    height: hp('10%'),
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '2%',
+  },
+  addCoverTextView: {
+    position: 'absolute',
+    textAlign: 'center',
+  },
+  addCoverText: {
+    color: '#BEBEBE',
+    fontSize: 14,
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  addCoverimageAddIcon: {
+    position: 'absolute',
+    right: '1%',
+    justifyContent: 'center',
+  },
+  uploadImage: {
+    width: wp('90%'),
+    height: hp('40%'),
+    marginRight: 15,
+    marginBottom: 10,
+    borderRadius: 15,
+  },
+  buttonSubmit: {
+    height: hp('7%'),
+    backgroundColor: '#FF2485',
+    borderRadius: 25,
+    justifyContent: 'center',
+    marginTop: '10%',
+    marginBottom: '10%',
+    marginLeft: '20%',
+    marginRight: '20%',
+  },
+  createEventButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Gilroy-SemiBold',
+  },
+  eventTypeItemView: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    height: 30,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#BEBEBE',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    overflow: 'hidden',
+  },
+});

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>611597288784-qao16uerkcpr3o8ovinor9d0494jsib6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.611597288784-qao16uerkcpr3o8ovinor9d0494jsib6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCDhqFMTykPKs7Nh_B82xeufAs8v2OFV7E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>611597288784</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.comecloselyltd.comeclosely</string>
+	<key>PROJECT_ID</key>
+	<string>comeclosely-71c7c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>comeclosely-71c7c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:611597288784:ios:13d9a62b9d4301a7e91855</string>
+	<key>DATABASE_URL</key>
+	<string>https://comeclosely-71c7c.firebaseio.com</string>
+</dict>
+</plist>
