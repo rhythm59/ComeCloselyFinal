@@ -3,12 +3,11 @@ import {StyleSheet, Dimensions} from 'react-native';
 export default StyleSheet.create({
   icon: {
     aspectRatio: 1,
-    height: '45%',
-    // resizeMode: 'contain',
-    borderRadius:100,
-    overflow:'hidden'
+    height: '48%',
   },
-
+  profileIcon:{
+    borderRadius: 100,
+  },
   iconHome: {
     aspectRatio: 0.9,
     height: '48%',

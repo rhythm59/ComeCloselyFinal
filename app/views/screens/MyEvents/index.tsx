@@ -6,12 +6,16 @@ import {
   ImageBackground,
   ScrollView,
   Image,
-  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+  TouchableHighlight
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import Modal from 'react-native-modal';
-
+import SideMenu from 'react-native-side-menu';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Menu from '../../components/Menu';
 import { AppImages } from '../../config';
 import styles from './styles';
 import Loading from '../../components/Loading';
@@ -38,16 +42,47 @@ interface DataSourceI {
 interface ComponentState {
   isModalVisible: boolean;
   selectedEventId: string | undefined;
+  isOpen: boolean;
+  selectedItem: string | undefined;
 }
 const INITIAL_STATE: ComponentState = {
+  isOpen: false,
   isModalVisible: false,
-  selectedEventId: undefined,
+  selectedEventId: undefined,  
+  selectedItem: 'MyEvents',
 };
 
 class MyEvents extends React.Component<ComponentProps, ComponentState> {
   constructor(props: any) {
     super(props);
     this.state = { ...INITIAL_STATE };
+    this.menuTapped = this.menuTapped.bind(this);
+  }
+
+  menuTapped() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
+
+  updateMenuState(isOpen: boolean) {
+    this.setState({ isOpen });
+  }
+
+  memoriesCommentTapped(memoryId: any) {
+    this.props.navigation.navigate('Comments', { memoryId });
+  }
+
+  onMenuItemSelected = (item: any) => {
+    this.props.navigation.navigate(item);
+    this.setState({
+      isOpen: false,
+      selectedItem: item,
+    });
+  };
+
+  onEventTapped = (item: any) => {
+    this.props.navigation.navigate('EventInfo', { eventData: item })
   }
 
   showModal = (id: string | undefined) => {
@@ -73,7 +108,6 @@ class MyEvents extends React.Component<ComponentProps, ComponentState> {
   };
 
   formattedDate(date: string): string {
-    console.log('date:', date)
     return date?.substring(0, date.lastIndexOf(' ') + 1);
   }
 
@@ -83,8 +117,13 @@ class MyEvents extends React.Component<ComponentProps, ComponentState> {
 
   render() {
     const { events, getEventsLoading, deleteEventLoading } = this.props;
-    console.log(events)
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     return (
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}
+        menuPosition="right">
       <View style={styles.mainView}>
         {/* <ScrollView> */}
         <View style={styles.backImage}>
@@ -99,10 +138,13 @@ class MyEvents extends React.Component<ComponentProps, ComponentState> {
             <View>
               <Text style={styles.profileText}>My Events</Text>
             </View>
-            <View style={styles.menuImageViewContainer}>
-              <View style={styles.menuImageView}>
-                <Image style={styles.menuImage} source={AppImages.menu} />
-              </View>
+            <View style={styles.viewMenu}>
+              <TouchableHighlight
+                underlayColor="rgba(0,0,0,0.0)"
+                style={styles.menu}
+                onPress={this.menuTapped}>
+                <Image source={AppImages.menu} style={styles.menuImg} />
+              </TouchableHighlight>
             </View>
           </View>
         </View>
@@ -168,7 +210,6 @@ class MyEvents extends React.Component<ComponentProps, ComponentState> {
                       </View>
                       <View style={styles.dateTitleView}>
                         <View style={styles.dateView}>
-                          {console.log(event)}
                           <Text style={styles.dateText}>
                             {this.formattedDate(event.date)} | {event.time}
                           </Text>
@@ -192,6 +233,7 @@ class MyEvents extends React.Component<ComponentProps, ComponentState> {
         </View>
         {/* </ScrollView> */}
       </View>
+      </SideMenu>
     );
   }
 }

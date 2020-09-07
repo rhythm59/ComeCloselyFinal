@@ -55,6 +55,34 @@ export const getUser = (id: string) => {
   };
 };
 
+export const getUserByNewID = (id: string) => {
+  return async (dispatch: Function) => {
+    dispatch({ type: GET_USER_REQUEST });
+    try {
+      firestore()
+        .collection('users')
+        .doc(id)
+        .get()
+        .then((documentSnapshot) => {
+          if (documentSnapshot.exists) {
+            let userData = { ...documentSnapshot.data(), uid: documentSnapshot.id }
+            dispatch({
+              type: GET_USER_SUCCESS,
+              payload: userData,
+            });
+            console.log(userData.name);
+            auth().currentUser?.updateProfile({
+              displayName: userData.name,
+              photoURL: userData.displayPhoto
+            })
+          }
+        });
+    } catch (error) {
+      dispatch({ type: GET_USER_FAILED, payload: error });
+    }
+  };
+};
+
 export const getRecommendedUsers = () => {
   return async (dispatch: Function) => {
     dispatch({ type: GET_RECOMMENDED_USERS_REQUEST });
@@ -63,7 +91,6 @@ export const getRecommendedUsers = () => {
         .collection('users')
         .onSnapshot((querySnapshot) => {
           const events: Array<UserI> = [];
-
           querySnapshot.forEach((documentSnapshot) => {
             events.push({
               ...documentSnapshot.data(),
@@ -86,7 +113,6 @@ export const searchUsers = (key) => {
         .collection('users')
         .onSnapshot((querySnapshot) => {
           const events: Array<UserI> = [];
-
           querySnapshot.forEach((documentSnapshot) => {
             if (documentSnapshot.data().name.toLowerCase().indexOf(key.toLowerCase()) != -1) {
               events.push({
@@ -115,7 +141,6 @@ export const unfollowUser = (userKey, followUserKey) => {
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
-            console.log('doc:', doc.id)
             doc.ref.delete();
           });
         });
@@ -165,6 +190,7 @@ export const getFollowing = (userKey) => {
   };
 };
 export const getFollower = (userKey) => {
+
   return async (dispatch: Function) => {
     try {
       firestore()
@@ -231,7 +257,7 @@ export const sendMessage = (chatroomId: string, userKey: string, otherUserKey: s
 
       dispatch({ type: SEND_MESSAGE_SUCCESS, payload: 'Send' });
     } catch (error) {
-      console.log(error)
+
     }
   };
 };
@@ -252,24 +278,15 @@ export const getMessages = (chatroomId: string) => {
               ...documentSnapshot.data(),
               id: documentSnapshot.id,
             });
-          });
-          // firestore()
-          //   .collection('messages').doc(currentUser).collection(otherUser)
-          //   .onSnapshot((querySnapshot) => {
-          //     const events: Array<UserI> = [];
-          //     querySnapshot.forEach((documentSnapshot) => {
-          //       events.push({
-          //         ...documentSnapshot.data(),
-          //         id: documentSnapshot.id,
-          //       });
-          //     });
+          });       
+
           dispatch({ type: GET_MESSAGE_SUCCESS, payload: events });
 
         });
     } catch (error) {
       dispatch({ type: GET_MESSAGE_SUCCESS, payload: [] });
-      console.log(error)
-      // dispatch({type: GET_FOLLOW_USERS_FAILD, payload: error});
+      
+
     }
   };
 };
@@ -305,8 +322,6 @@ export const getUserChatrooms = (userId: string) => {
         });
     } catch (error) {
       dispatch({ type: GET_CHATROOMS_SUCCESS, payload: [] });
-      console.log(error)
-      // dispatch({type: GET_FOLLOW_USERS_FAILD, payload: error});
     }
   };
 };
@@ -367,31 +382,8 @@ export const getStories = (userId: string) => {
           dispatch({ type: GET_STORIES_SUCCESS, payload: storiesWithUserData });
         });
     } catch (error) {
-      console.log(error)
+
       dispatch({ type: GET_STORIES_SUCCESS, payload: [] });
     }
   };
 };
-// export const getMessageFriends = (currentUser) => {
-//   console.log(currentUser)
-//   return async (dispatch: Function) => {
-//     try {
-//      let a = firestore()
-//         .collection('friends').doc(currentUser).get()
-//         console.log(a)
-//         // .onSnapshot((querySnapshot) => {
-//         //   const events: Array<UserI> = [];
-//         //   console.log('sadsdsasd',querySnapshot)
-//         //   querySnapshot.forEach((documentSnapshot) => {
-//         //       events.push({
-//         //         ...documentSnapshot.data(),
-//         //         id: documentSnapshot.id,
-//         //       });
-//         //   });
-//           dispatch({type: GET_MESSAGE_FRIEND_SUCCESS, payload: events});
-//         });
-//     } catch (error) {
-//         // dispatch({type: GET_FOLLOW_USERS_FAILD, payload: error});
-//     }
-//   };
-// };

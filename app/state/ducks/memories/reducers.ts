@@ -38,14 +38,12 @@ const memoryReducer = createReducer(initialState)({
     },
 
     [GET_COMMENTS_BY_MEMORY_ID_REQUEST]: (state: any) => {
-        console.log('GET_COMMENTS_BY_MEMORY_ID_REQUEST');
         return {
             ...state,
             getCommentsOnMemoryLoading: true,
         };
     },
     [GET_COMMENTS_BY_MEMORY_ID_SUCCESS]: (state: any, action: any) => {
-        console.log('GET_COMMENTS_BY_MEMORY_ID_SUCCESS');
         return {
             ...state,
             getCommentsOnMemoryError: null,
@@ -54,7 +52,6 @@ const memoryReducer = createReducer(initialState)({
         };
     },
     [GET_COMMENTS_BY_MEMORY_ID_FAILED]: (state: any, action: any) => {
-        console.log('GET_COMMENTS_BY_MEMORY_ID_FAILED');
         return {
             ...state,
             getCommentsOnMemoryError: action.payload.message,

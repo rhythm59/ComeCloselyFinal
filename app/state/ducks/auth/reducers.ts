@@ -30,14 +30,12 @@ const initialState = {
 
 const authReducer = createReducer(initialState)({
   [SIGNIN_REQUEST]: (state: any) => {
-    console.log('signing in');
     return {
       ...state,
       signInLoading: true,
     };
   },
   [SIGNIN_SUCCESS]: (state: any) => {
-    console.log('signedin');
     return {
       ...state,
       signInError: null,
@@ -45,7 +43,6 @@ const authReducer = createReducer(initialState)({
     };
   },
   [SIGNIN_FAILED]: (state: any, action: any) => {
-    console.log('not signedin');
     return {
       ...state,
       signInError: action.payload.message,
@@ -53,14 +50,12 @@ const authReducer = createReducer(initialState)({
     };
   },
   [SIGNUP_REQUEST]: (state: any) => {
-    console.log('signing up');
     return {
       ...state,
       signUpLoading: true,
     };
   },
   [SIGNUP_SUCCESS]: (state: any) => {
-    console.log('signedup');
     return {
       ...state,
       signUpError: null,
@@ -68,7 +63,6 @@ const authReducer = createReducer(initialState)({
     };
   },
   [SIGNUP_FAILED]: (state: any) => {
-    console.log('not signedup');
     return {
       ...state,
       signUpError: 'SignUp Failed.',
@@ -76,14 +70,12 @@ const authReducer = createReducer(initialState)({
     };
   },
   [RESEND_VERIFICATION_EMAIL_REQUEST]: (state: any) => {
-    console.log('resend verify email');
     return {
       ...state,
       resendVerificationEmailLoading: true,
     };
   },
   [RESEND_VERIFICATION_EMAIL_SUCCESS]: (state: any) => {
-    console.log('resend verify email success');
     return {
       ...state,
       resendVerificationEmailError: null,
@@ -91,7 +83,6 @@ const authReducer = createReducer(initialState)({
     };
   },
   [RESEND_VERIFICATION_EMAIL_FAILED]: (state: any) => {
-    console.log('resend verify email fail');
     return {
       ...state,
       resendVerificationEmailError: 'Failed.',
@@ -99,14 +90,12 @@ const authReducer = createReducer(initialState)({
     };
   },
   [FORGOT_PASSWORD_REQUEST]: (state: any) => {
-    console.log('forget password');
     return {
       ...state,
       forgotPasswordLoading: true,
     };
   },
   [FORGOT_PASSWORD_SUCCESS]: (state: any) => {
-    console.log('forget password success');
     return {
       ...state,
       forgotPasswordError: null,
@@ -114,7 +103,6 @@ const authReducer = createReducer(initialState)({
     };
   },
   [FORGOT_PASSWORD_FAILED]: (state: any) => {
-    console.log('forget password fail');
     return {
       ...state,
       forgotPasswordError: 'Forgot Password Failed.',
@@ -122,7 +110,6 @@ const authReducer = createReducer(initialState)({
     };
   },
   [SIGNOUT_SUCCESS]: (state: any) => {
-    console.log('signedout');
     return state;
   },
 });

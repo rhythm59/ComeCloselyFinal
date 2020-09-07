@@ -28,17 +28,17 @@ function logGroupCollapsed(...args: any[]) {
     typeof console.groupCollapsed === 'function'
       ? console.groupCollapsed
       : console.info;
-  logFunction(...args);
+  //logFunction(...args);
 }
 
 function logGroupEnd(...args: any[]) {
   const logFunction =
     typeof console.groupEnd === 'function' ? console.groupEnd : console.info;
-  logFunction(...args);
+  //logFunction(...args);
 }
 
 function logInfo(...args: any[]) {
-  console.info(...args);
+  //console.info(...args);
 }
 
 function determineStyle(action: any) {

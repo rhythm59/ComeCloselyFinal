@@ -46,6 +46,10 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    alignSelf: "flex-end"
   },
   closeView: {
     position: 'absolute',
@@ -81,10 +85,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 20,
   },
   bottomView: {
-    width: '85%',
-    aspectRatio: 4.5,
+    width: '70%',
+    height: hp('6%'),
     alignSelf: 'center',
     flexDirection: 'row',
     backgroundColor: '#FF2485',

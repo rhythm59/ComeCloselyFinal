@@ -66,7 +66,7 @@ export default StyleSheet.create({
   },
   ShareView: {
     height: hp('7%'),
-    width: wp('40%'),
+    width: wp('25%'),
     backgroundColor: '#F8F8F8',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,

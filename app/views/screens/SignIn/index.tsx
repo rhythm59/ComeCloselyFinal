@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, Text, TouchableHighlight} from 'react-native';
+import {View, Text, TouchableHighlight, KeyboardAvoidingView} from 'react-native';
 
 import {connect} from 'react-redux';
 import TextInput from 'react-native-textinput-with-icons';
@@ -42,7 +42,7 @@ const validationSchema = Yup.object().shape({
     .required('Please enter your password'),
 });
 
-class SignIn extends React.Component<ComponentProp, {}> {
+class SignIn extends React.Component<ComponentProp, ComponentState> {
   constructor(props: any) {
     super(props);
   }
@@ -62,7 +62,7 @@ class SignIn extends React.Component<ComponentProp, {}> {
   render() {
     const {isLoading} = this.props;
     return (
-      <KeyboardAwareScrollView extraHeight={15} enableOnAndroid={true}>
+      <KeyboardAvoidingView>
         <SafeAreaView style={styles.mainView}>
           <View style={styles.titleView}>
             <Text style={styles.title}>Come</Text>
@@ -209,7 +209,7 @@ class SignIn extends React.Component<ComponentProp, {}> {
             )}
           </Formik>
         </SafeAreaView>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }

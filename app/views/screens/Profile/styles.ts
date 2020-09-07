@@ -32,6 +32,32 @@ export default StyleSheet.create({
     marginRight: '5%',
     alignItems: 'center',
   },
+  profileTextView: {
+    height: hp('8%'),
+    flexDirection: 'row',
+    marginTop: '0%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    alignItems: 'center',
+  },
+  viewMenu: {
+    flex: 1,
+    height: '100%',
+    marginTop: 0,
+    justifyContent: 'flex-end',
+  },
+  menu: {
+    justifyContent: 'center',
+    height: '100%',
+    aspectRatio: 1,
+    marginRight: 20,
+    alignSelf: 'flex-end',
+  },
+  menuImg: {
+    width: '50%',
+    height: '35%',
+    alignSelf: 'flex-end',
+  },
   profileText: {
     fontSize: 22,
     color: 'white',
@@ -60,7 +86,7 @@ export default StyleSheet.create({
     borderRadius: 20,
   },
   userMainView: { 
-    marginTop: '5%',
+    marginTop: '10%',
     alignItems: 'center',
     flexDirection: 'row',
     alignSelf:'center'
@@ -68,7 +94,9 @@ export default StyleSheet.create({
   nameText: {
     fontSize: 25,
     color: 'black',
+    alignSelf:'center',
     fontFamily: 'Gilroy-Bold',
+    marginLeft: 0
   },
   verified: {
     marginTop: -25,
@@ -215,5 +243,49 @@ export default StyleSheet.create({
     width: '100%',
     height: 80,
     backgroundColor: 'rgba(0,0,0,0)',
+  },
+  cameraEdit:{
+    flex: 1,
+    marginTop: 10,
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+    position: 'absolute',
+    marginLeft: 150,
+  },
+  headerName:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  viewHeader: {
+    height: 64,
+    width: '100%',
+    marginTop: 20,
+    flexDirection: 'row',
+  },
+  messageView: {
+    justifyContent: 'center',
+    height: '100%',
+    marginLeft: 20,
+    fontSize: 30,
+  },
+  messageText: {
+    fontSize: 30,
+    color: 'white',
+    fontFamily: 'Gilroy-Bold',
+  },
+  storiesText: {
+    fontSize: 15,
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
+    alignSelf: 'flex-end',
+    marginBottom: -10,
+  },
+  editProfile:{
+    marginTop: 0,
+    marginLeft: 15,
+    height: 25,
+    width: 25,
+    resizeMode: 'contain',
   },
 });

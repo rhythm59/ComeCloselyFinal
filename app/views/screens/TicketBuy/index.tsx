@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import AuthProvider from '../../../../app/providers/auth';
 import { AuthContext } from '../../../../app/providers/auth';
 import firestore from '@react-native-firebase/firestore';
-
 class TicketBuy extends React.Component {
   state = {
     isLoading: false,
@@ -23,7 +22,9 @@ class TicketBuy extends React.Component {
       cvs: '',
       expiry: '',
       save: false
-    }
+    },
+    paypleDisplay: false,
+    creditCardDisplay: true,
   }
 
   componentDidMount() {
@@ -52,18 +53,23 @@ class TicketBuy extends React.Component {
 
     return fetch('https://api.stripe.com/v1/sources', {
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer pk_test_51H2Nb4KydQMjEXTR4eX9PRRN6W1WZNMfjPwWLJdc2JQutGTpQdHgpKs4GFmGfyMJ0IRvxlkt7pJ360xIwmp6MNNp00xGFzUayR`
+        'Authorization': `Bearer pk_test_51H2Nb4KydQMjEXTR4eX9PRRN6W1WZNMfjPwWLJdc2JQutGTpQdHgpKs4GFmGfyMJ0IRvxlkt7pJ360xIwmp6MNNp00xGFzUayR`
       },
       method: 'post',
-      // Format the credit card data to a string of key-value pairs
-      // divided by &
       body: 'type=card&' + Object.keys(card)
         .map(key => key + '=' + card[key])
         .join('&')
     }).then(response => response.json());
   };
+
+  paypleTapped(){
+    this.setState({ paypleDisplay: true , creditCardDisplay: false })
+  }
+  creditCardTapped(){
+    this.setState({ paypleDisplay: false , creditCardDisplay: true })
+  }
 
   handleSubmit = async () => {
     try {
@@ -81,7 +87,7 @@ class TicketBuy extends React.Component {
           'https://us-central1-comeclosely-71c7c.cloudfunctions.net/chargeuser',
           {
             headers: {
-              Accept: 'application/json',
+              'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
             method: 'post',
@@ -96,7 +102,6 @@ class TicketBuy extends React.Component {
         )
           .then(res => res.json())
           .then(async (resp: any) => {
-            console.log(resp)
             if (resp.error) {
               this.setState({ isLoading: false })
               this.props.navigation.navigate('PaymentStatus', { isPaymentSuccess: false })
@@ -120,7 +125,6 @@ class TicketBuy extends React.Component {
             }
           })
           .catch(e => {
-            console.log('error:', e.message)
             this.setState({ isLoading: false })
             this.props.navigation.navigate('PaymentStatus', { isPaymentSuccess: false })
           })
@@ -164,6 +168,39 @@ class TicketBuy extends React.Component {
 
   render() {
     const { eventData, ticketData, ticketId, creditCard, isLoading } = this.state;
+    // const onSuccess = (payment) => {
+    //         // Congratulation, it came here means everything's fine!
+    //         console.log("The payment was succeeded!", payment);
+    //     }    
+ 
+    //     const onCancel = (data) => {
+    //         // User pressed "cancel" or close Paypal's popup!
+    //         console.log('The payment was cancelled!', data);
+    //     }  
+ 
+    //     const onError = (err) => {
+    //         // The main Paypal's script cannot be loaded or somethings block the loading of that script!
+    //         console.log("Error!", err);    
+    //     }      
+ 
+    //     let env = 'sandbox'; // you can set here to 'production' for production
+    //     let currency = 'USD'; // or you can set this value from your props or state  
+    //     let total = eventData.ticketPrice;  // same as above, this is the total amount (based on currency) to be 
+    //     let locale = 'en_US'; 
+    //     // For Customize Style: https://developer.paypal.com/docs/checkout/how-to/customize-button/
+    //     let style = {
+    //         'label':'pay', 
+    //         'tagline': false, 
+    //         'size':'medium', 
+    //         'shape':'pill', 
+    //         'color':'gold'
+    //     };
+ 
+    // const client = {
+    //     sandbox:    'AUQHVtsw47Ff41RuikOiqVnjRz-chqj8u4ch53HwvPvTxbyv7PFCfipRReNd1HnbthgFX7vLHR2GXt6c',
+    //     production: '',
+    // }
+    // console.log(eventData);
     return (
       <View style={styles.container}>
         {/* for back Image */}
@@ -280,6 +317,7 @@ class TicketBuy extends React.Component {
               </View>
             </View>
           </View>
+          {this.state.creditCardDisplay && (
           <View style={styles.creditCardMainView}>
             <View style={styles.creditCardView}>
               <Image source={AppImages.card} style={styles.creditCardImage} />
@@ -316,128 +354,139 @@ class TicketBuy extends React.Component {
               </View>
             </View>
           </View>
+          )}
           <View style={styles.creditCardNPaypalBtnView}>
             <View style={styles.creditCardBtnMainView}>
-              <View style={styles.creditCardBtnView}>
-                <View style={styles.creditCardCheckBtnView}>
-                  <Image
-                    source={AppImages.checkedpink}
-                    style={styles.creditCardCheckImage}
-                  />
+              <TouchableOpacity onPress={() => this.creditCardTapped()}>
+                <View style={styles.creditCardBtnView}>
+                  <View style={styles.creditCardCheckBtnView}>
+                    {this.state.creditCardDisplay && (
+                      <Image
+                        source={AppImages.checkedpink}
+                        style={styles.paypalBtnImage}
+                      />
+                    )}  
+                    {!this.state.creditCardDisplay && (
+                      <Image
+                        source={AppImages.unchecked}
+                        style={styles.paypalBtnImage}
+                      />
+                    )} 
+                  </View>
+                  <Text
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.creditCardBtnText}>
+                    Credit Cards
+                  </Text>
                 </View>
-                <Text
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.creditCardBtnText}>
-                  Credit Cards
-                </Text>
-              </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.payPalBtnMainView}>
-              <View style={styles.payPalBtnView}>
-                <View style={styles.paypalBtnImgView}>
-                  <Image
-                    source={AppImages.unchecked}
-                    style={styles.paypalBtnImage}
+              <TouchableOpacity onPress={() => this.paypleTapped()}>
+                <View style={styles.payPalBtnView}>
+                  <View style={styles.paypalBtnImgView}>
+                    {this.state.paypleDisplay && (
+                      <Image
+                        source={AppImages.checkedpink}
+                        style={styles.paypalBtnImage}
+                      />
+                    )}  
+                    {!this.state.paypleDisplay && (
+                      <Image
+                        source={AppImages.unchecked}
+                        style={styles.paypalBtnImage}
+                      />
+                    )} 
+                  </View>
+                  <Image source={AppImages.paypal} style={styles.paypalLogo} />
+                  <Text
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    style={styles.payPalBtnTxt}>
+                    {' '}
+                    PayPal
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+         {this.state.creditCardDisplay && (
+          <View style={styles.cardDataView}>
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              style={styles.cardInformationText}>
+              {' '}
+              Card Information
+            </Text>
+            <View style={styles.nameTextInputView}>
+              <TextInput
+                placeholder={'Name'}
+                placeholderTextColor={'#707070'}
+                style={styles.nameTextInput}
+                value={creditCard.name}
+                onChangeText={this.handleCreditCardData('name')}
+              />
+            </View>
+            <View style={styles.cardNoTextInputView}>
+              <TextInput
+                placeholder={'Card No'}
+                placeholderTextColor={'#707070'}
+                style={styles.cardNoTextInput}
+                value={creditCard.number}
+                onChangeText={this.handleCreditCardData('number')}
+              />
+              <Image source={AppImages.visa} style={styles.visaImage} />
+            </View>
+            <View style={styles.cvcNExpDate}>
+              <View style={styles.cvcView}>
+                <View style={styles.cvcTextInputView}>
+                  <TextInput
+                    placeholder={'CVS'}
+                    placeholderTextColor={'#707070'}
+                    style={styles.cvcTextInput}
+                    value={creditCard.cvs}
+                    onChangeText={this.handleCreditCardData('cvs')}
                   />
                 </View>
-                <Image source={AppImages.paypal} style={styles.paypalLogo} />
-                <Text
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.payPalBtnTxt}>
-                  {' '}
-                  PayPal
-                </Text>
               </View>
-            </View>
-          </View>
-          <View style={styles.skrillBtnMainView}>
-            <View style={styles.skrillBtnSubView}>
-              <View style={styles.skrillBtnView}>
-                <View style={styles.skrillBtnCheckImgView}>
-                  <Image
-                    source={AppImages.unchecked}
-                    style={styles.skrillBtnCheckImage}
+              <View style={styles.exDateView}>
+                <View style={styles.exDateTextInputView}>
+                  <TextInput
+                    placeholder={'Ex Date'}
+                    placeholderTextColor={'#707070'}
+                    style={styles.exDateTextInput}
+                    value={creditCard.expiry}
+                    onChangeText={this.handleCreditCardData('expiry')}
                   />
                 </View>
-                <Text
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  style={styles.skrillBtnText}>
-                  Skrill
-                </Text>
               </View>
             </View>
-          </View>
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            style={styles.cardInformationText}>
-            {' '}
-            Card Information
-          </Text>
-          <View style={styles.nameTextInputView}>
-            <TextInput
-              placeholder={'Name'}
-              placeholderTextColor={'#707070'}
-              style={styles.nameTextInput}
-              value={creditCard.name}
-              onChangeText={this.handleCreditCardData('name')}
-            />
-          </View>
-          <View style={styles.cardNoTextInputView}>
-            <TextInput
-              placeholder={'Card No'}
-              placeholderTextColor={'#707070'}
-              style={styles.cardNoTextInput}
-              value={creditCard.number}
-              onChangeText={this.handleCreditCardData('number')}
-            />
-            <Image source={AppImages.visa} style={styles.visaImage} />
-          </View>
-          <View style={styles.cvcNExpDate}>
-            <View style={styles.cvcView}>
-              <View style={styles.cvcTextInputView}>
-                <TextInput
-                  placeholder={'CVS'}
-                  placeholderTextColor={'#707070'}
-                  style={styles.cvcTextInput}
-                  value={creditCard.cvs}
-                  onChangeText={this.handleCreditCardData('cvs')}
-                />
-              </View>
-            </View>
-            <View style={styles.exDateView}>
-              <View style={styles.exDateTextInputView}>
-                <TextInput
-                  placeholder={'Ex Date'}
-                  placeholderTextColor={'#707070'}
-                  style={styles.exDateTextInput}
-                  value={creditCard.expiry}
-                  onChangeText={this.handleCreditCardData('expiry')}
-                />
-              </View>
+            <View style={styles.cardSaveView}>
+              <TouchableOpacity onPress={() => this.handleCreditCardData('save')(!creditCard.save)} style={styles.cardSaveCheckMarkImage} >
+                {this.renderSaveCardCheckBox()}
+              </TouchableOpacity>
+              <Text style={styles.cardSaveTextInput}>save the card</Text>
             </View>
           </View>
-          <View style={styles.cardSaveView}>
-            <TouchableOpacity onPress={() => this.handleCreditCardData('save')(!creditCard.save)} style={styles.cardSaveCheckMarkImage} >
-              {this.renderSaveCardCheckBox()}
-            </TouchableOpacity>
-            <Text style={styles.cardSaveTextInput}>save the card</Text>
-          </View>
-          <View style={styles.completePaymentBtnView}>
-            <TouchableOpacity disabled={isLoading} onPress={this.handleSubmit}>
-              <View style={styles.completePaymentBtnSubView}>{
-                isLoading ?
-                  <View style={[styles.CompletePaymentText, { width: 180 }]}>
-                    <ActivityIndicator color="white" />
-                  </View> :
-                  <Text style={styles.CompletePaymentText}>COMPLETE PAYMENT</Text>
-              }
-              </View>
-            </TouchableOpacity>
-          </View>
+          )}
+          
+            <View style={styles.completePaymentBtnView}>
+              <TouchableOpacity disabled={isLoading} onPress={this.handleSubmit}>
+                <View style={styles.completePaymentBtnSubView}>{
+                  isLoading ?
+                    <View style={[styles.CompletePaymentText, { width: 180 }]}>
+                      <ActivityIndicator color="white" />
+                    </View> :
+                    <Text style={styles.CompletePaymentText}>COMPLETE PAYMENT</Text>
+                }
+                </View>
+              </TouchableOpacity>
+            </View>
+          
+          
           <View style={styles.bottomSafeArea} />
         </ScrollView>
       </View>
@@ -467,5 +516,3 @@ function WrapTicketBuy(props: any) {
   )
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WrapTicketBuy);
-
-// export default TicketBuy;

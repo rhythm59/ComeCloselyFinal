@@ -8,6 +8,23 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F8F8',
   },
+  menuImg: {
+    width: '50%',
+    height: '35%',
+    alignSelf: 'flex-end',
+  },
+  viewMenu: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+  menu: {
+    justifyContent: 'center',
+    height: '100%',
+    aspectRatio: 1,
+    marginRight: 20,
+    alignSelf: 'flex-end',
+  },
   backImage: {
     overflow: 'hidden',
   },
@@ -151,10 +168,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   deleteImageView: {
-    position: 'absolute',
+    position: 'relative',
     right: 0,
     marginTop: 10,
-    marginRight: 20,
+    marginLeft: 220,
   },
   dateTitleView: {
     width: '100%',

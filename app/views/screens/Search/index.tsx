@@ -48,6 +48,7 @@ interface ComponentState {
   selectedEventId: number;
   loading: boolean;
   isAccount: boolean;
+  isEvents: boolean;
   currentPosition: string;
   currentPositionLatitude: number;
   currentPositionLongitude: number;
@@ -57,7 +58,8 @@ interface ComponentState {
 const INITIAL_STATE: ComponentState = {
   selectedEventId: -1,
   loading: false,
-  isAccount: true,
+  isAccount: false,
+  isEvents: false,
   dataSource: [],
   currentPosition: 'unknown',
   currentPositionLatitude: 0.0,
@@ -109,9 +111,7 @@ const INITIAL_STATE: ComponentState = {
 class Search extends React.Component<ComponentProps, ComponentState> {
   flatList: any;
 
-  closeTapped() {
-    this.props.navigation.goBack();
-  }
+  
 
   constructor(props: ComponentProps) {
     super(props);
@@ -125,10 +125,6 @@ class Search extends React.Component<ComponentProps, ComponentState> {
   };
 
   handlePosition = (id: number, index: number) => {
-    /* Item Size from FlatList */
-    /* const itemSize = Dimensions.get('window').width
-    const idCurrentItem = index; */
-    console.log('indexxxx' + this.state.arrPlace.length, id, index);
     this.flatList.scrollToIndex({
       animated: true,
       index: index,
@@ -147,44 +143,51 @@ class Search extends React.Component<ComponentProps, ComponentState> {
   componentDidMount() {
     Geolocation.getCurrentPosition(
       (position) => {
-        console.log('current loction-->' + position.coords.longitude);
         this.setState({
           currentPositionLatitude: position.coords.latitude,
           currentPositionLongitude: position.coords.longitude,
         });
       },
       (error) => {
-        console.log(error.code, error.message);
+        
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
+    this.props.getRecommendedUsers();  
+  }
 
-    this.props.getRecommendedUsers();
-    /* fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          loading: false,
-          dataSource: responseJson,
-          isAccount: true,
-        });
-      })
-      .catch((error) => console.log(error)); */
-
+  closeTapped() {
+    this.setState({ 
+      isAccount: false,
+      isEvents: false});
   }
 
   segmentControll = () => {
     this.setState({
       isAccount: !this.state.isAccount,
+      isEvents: !this.state.isEvents,
     });
   };
 
   segmentControllView = () => {
-    if (this.state.isAccount) {
-      const { recommendedUsers, getRecommendedUsersLoading, getSearchUsers } = this.props;
-      // console.log('aaaaaaaaaa',this.props.getSearchUsers)
+     if (this.state.isAccount) {
+      const { recommendedUsers, getRecommendedUsersLoading } = this.props;
       return (
-        <View style={styles.mainView}>
+        <View style={{ flex: 1 }}>
+          <View style={styles.headerMainView}>
+            <TouchableOpacity
+                activeOpacity={1.0}
+                onPress={this.closeTapped}
+                >
+              <View style={styles.findUserView}>
+                <Text style={styles.findUserTxt}>Find Users</Text>                
+                <Image source={AppImages.close} style={styles.closeIcon} />                
+              </View>
+            </TouchableOpacity>            
+          </View>
+          
+
+        <View style={styles.mainView}>            
           <View style={styles.segMainView}>
             <TouchableOpacity
               activeOpacity={0.9}
@@ -212,156 +215,269 @@ class Search extends React.Component<ComponentProps, ComponentState> {
                 placeholder="Search"
                 placeholderTextColor="grey"
                 onChangeText={this.handleInputTextChange}
-              // onChangeText={()=>{this.props.searchUsers(this.state.searchUser)}} 
               />
               <Image source={AppImages.search} style={styles.searchIcon} />
             </View>
           </View>
           <FlatList
-            data={getSearchUsers}
+            data={recommendedUsers.filter(e => (e.id !== this.context.currentUser.uid))}
             renderItem={(item) => this.accountListItem(item)}
             keyExtractor={(item) => item.id!}
-
           />
           <View style={styles.bottomTabSpace} />
         </View>
+      </View>
       );
-    } else {
+    } else if(this.state.isEvents){
       return (
-        <View style={styles.mainView}>
-          <View style={styles.mapViewMainView}>
-            <View style={styles.mapViewChildView}>
-              <MapView
-                provider={PROVIDER_GOOGLE}
-                style={styles.mapView}
-                region={{
-                  latitude: this.state.currentPositionLatitude,
-                  longitude: this.state.currentPositionLongitude,
-                  latitudeDelta: 0.001,
-                  longitudeDelta: 0.001,
-                }}
-                showsUserLocation={true}
-                followsUserLocation={true}
-                showsPointsOfInterest={true}
-                maxZoomLevel={18.5}>
-                <Circle
-                  key={'test'}
-                  center={{
+        <View style={{ flex: 1 }}>
+          <View style={styles.headerMainView}>
+            <TouchableOpacity
+                activeOpacity={1.0}
+                onPress={this.closeTapped}
+                >
+              <View style={styles.findUserView}>
+                <Text style={styles.findUserTxt}>Find Events</Text>                
+                <Image source={AppImages.close} style={styles.closeIcon} />                
+              </View>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.mainView}>
+            <View style={styles.mapViewMainView}>
+              <View style={styles.mapViewChildView}>
+                <MapView
+                  provider={PROVIDER_GOOGLE}
+                  style={styles.mapView}
+                  region={{
                     latitude: this.state.currentPositionLatitude,
                     longitude: this.state.currentPositionLongitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
                   }}
-                  radius={80}
-                  strokeWidth={1}
-                  strokeColor={'rgba(255,36,133,0.1)'}
-                  fillColor={'rgba(255,36,133,0.1)'}
-                />
-                {this.state.arrPlace.map((report, index) => (
-                  <Marker
-                    key={report.id}
-                    coordinate={{
-                      latitude: report.marklatitude,
-                      longitude: report.marklongitude,
+                  showsUserLocation={true}
+                  followsUserLocation={true}
+                  showsPointsOfInterest={true}
+                  zoomEnabled={true}
+                  >
+                  <Circle
+                    key={'test'}
+                    center={{
+                      latitude: this.state.currentPositionLatitude,
+                      longitude: this.state.currentPositionLongitude,
                     }}
-                    title={report.name}
-                    onPress={() => this.handlePosition(report.id, index)}>
-                    <View style={styles.markerView}>
-                      <Image
-                        source={
-                          report.id === this.state.selectedEventId
-                            ? AppImages.livemarker
-                            : null
-                        }
-                        style={styles.liveMakerImageView}
-                      />
-                      <Image
-                        source={report.image}
-                        style={styles.markerImageView}
-                      />
-                    </View>
-                  </Marker>
-                ))}
-              </MapView>
-              <View style={styles.markerFlatListMainView}>
-                <FlatList
-                  inverted
-                  data={this.state.arrPlace}
-                  ref={(ref) => (this.flatList = ref)}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }: any) => (
-                    <TouchableOpacity
-                      activeOpacity={0.9}
-                      onPress={() => this._handleEventSelect(item.id)}
-                      style={[
-                        styles.markerListItemMainView,
-                        item.id === this.state.selectedEventId
-                          ? styles.showshadow
-                          : styles.hideShadow,
-                      ]}>
-                      <View style={styles.listItemImageMainView}>
+                    radius={80}
+                    strokeWidth={1}
+                    strokeColor={'rgba(255,36,133,0.1)'}
+                    fillColor={'rgba(255,36,133,0.1)'}
+                  />
+                  {this.state.arrPlace.map((report, index) => (
+                    <Marker
+                      key={report.id}
+                      coordinate={{
+                        latitude: report.marklatitude,
+                        longitude: report.marklongitude,
+                      }}
+                      title={report.name}
+                      onPress={() => this.handlePosition(report.id, index)}>
+                      <View style={styles.markerView}>
                         <Image
-                          style={styles.listItemImageView}
-                          source={AppImages.fifaresume}
+                          source={
+                            report.id === this.state.selectedEventId
+                              ? AppImages.livemarker
+                              : null
+                          }
+                          style={styles.liveMakerImageView}
+                        />
+                        <Image
+                          source={report.image}
+                          style={styles.markerImageView}
                         />
                       </View>
-                      <View style={styles.listItemInformationMainView}>
-                        <View style={styles.listItemTypeMainView}>
-                          <Text style={styles.listItemTypeTextView}>
-                            {item.tag}
-                          </Text>
+                    </Marker>
+                  ))}
+                </MapView>
+                <View style={styles.markerFlatListMainView}>
+                  <FlatList
+                    horizontal
+                    data={this.state.arrPlace}
+                    ref={(ref) => (this.flatList = ref)}
+                    //keyExtractor={(item) => item.id}
+                    renderItem={({ item }: any) => (
+                      <TouchableOpacity
+                        activeOpacity={0.9}
+                        onPress={() => this._handleEventSelect(item.id)}
+                        style={[
+                          styles.markerListItemMainView,
+                          item.id === this.state.selectedEventId
+                            ? styles.showshadow
+                            : styles.hideShadow,
+                        ]}>
+                        <View style={styles.listItemImageMainView}>
+                          <Image
+                            style={styles.listItemImageView}
+                            source={AppImages.fifaresume}
+                          />
                         </View>
-                        <View style={styles.eventNameMainView}>
-                          <Text
-                            numberOfLines={1}
-                            adjustsFontSizeToFit
-                            style={styles.eventNameTextView}>
-                            {item.name}
-                          </Text>
-                          <Text
-                            numberOfLines={1}
-                            adjustsFontSizeToFit
-                            style={styles.nameTextView}>
-                            {item.userName}
-                          </Text>
+                        <View style={styles.listItemInformationMainView}>
+                          <View style={styles.listItemTypeMainView}>
+                            <Text style={styles.listItemTypeTextView}>
+                              {item.tag}
+                            </Text>
+                          </View>
+                          <View style={styles.eventNameMainView}>
+                            <Text
+                              numberOfLines={1}
+                              adjustsFontSizeToFit
+                              style={styles.eventNameTextView}>
+                              {item.name}
+                            </Text>
+                            <Text
+                              numberOfLines={1}
+                              adjustsFontSizeToFit
+                              style={styles.nameTextView}>
+                              {item.userName}
+                            </Text>
+                          </View>
+                          <View style={styles.dateMainView}>
+                            <Text style={styles.dateTextView}>{item.date}</Text>
+                          </View>
                         </View>
-                        <View style={styles.dateMainView}>
-                          <Text style={styles.dateTextView}>{item.date}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  )}
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '100%', height: 49 }}></View>
+              <SafeAreaView />
+            </View>
+            <View style={styles.segMainView}>            
+              <TouchableOpacity activeOpacity={0.9} style={styles.eventMainView}>
+                <View style={[styles.eventView, { backgroundColor: '#FF2485' }]}>
+                  <Text style={[styles.eventTxt, { color: 'white' }]}>Events</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={1.0}
+                style={styles.accountsMainView}
+                onPress={this.segmentControll}>
+                <View style={[styles.accountsView, { backgroundColor: 'white' }]}>
+                  <Text style={styles.accountsTxt}>Accounts</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.searchMainView}>
+              <View style={styles.descriptionView}>
+                <TextInput
+                  style={styles.followTxt}
+                  underlineColorAndroid="transparent"
+                  placeholder="Search"
+                  placeholderTextColor="grey"
                 />
+                <Image source={AppImages.search} style={styles.searchIcon} />
               </View>
             </View>
-            <View style={{ width: '100%', height: 49 }}></View>
-            <SafeAreaView />
           </View>
-          <View style={styles.segMainView}>
-            <TouchableOpacity activeOpacity={0.9} style={styles.eventMainView}>
-              <View style={[styles.eventView, { backgroundColor: '#FF2485' }]}>
-                <Text style={[styles.eventTxt, { color: 'white' }]}>Events</Text>
+       </View>
+      );
+  }else{
+       return (
+        
+         <View style={{ flex: 1 }}>
+          <View style={styles.headerMainView}>           
+              <View style={styles.findUserView}>
+                <Text style={styles.findUserTxt}>Find</Text>  
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={1.0}
-              style={styles.accountsMainView}
-              onPress={this.segmentControll}>
-              <View style={[styles.accountsView, { backgroundColor: 'white' }]}>
-                <Text style={styles.accountsTxt}>Accounts</Text>
-              </View>
-            </TouchableOpacity>
           </View>
-          <View style={styles.searchMainView}>
-            <View style={styles.descriptionView}>
-              <TextInput
-                style={styles.followTxt}
-                underlineColorAndroid="transparent"
-                placeholder="Search"
-                placeholderTextColor="grey"
-              />
-              <Image source={AppImages.search} style={styles.searchIcon} />
+          
+          <View style={styles.mainView}>
+            <View style={styles.mapViewMainView}>
+              <View style={styles.mapViewChildView}>
+                <MapView
+                  provider={PROVIDER_GOOGLE}
+                  style={styles.mapView}
+                  region={{
+                    latitude: this.state.currentPositionLatitude,
+                    longitude: this.state.currentPositionLongitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}
+                  showsUserLocation = {true}
+                  showsMyLocationButton = {true}
+                  zoomEnabled = {true}
+                  >
+                  <Circle
+                    key={'test'}
+                    center={{
+                      latitude: this.state.currentPositionLatitude,
+                      longitude: this.state.currentPositionLongitude,
+                    }}
+                    radius={80}
+                    strokeWidth={1}
+                    strokeColor={'rgba(255,36,133,0.1)'}
+                    fillColor={'rgba(255,36,133,0.1)'}
+                  />
+                  {this.state.arrPlace.map((report, index) => (
+                    <Marker
+                      key={report.id}
+                      coordinate={{
+                        latitude: report.marklatitude,
+                        longitude: report.marklongitude,
+                      }}
+                      title={report.name}
+                      onPress={() => this.handlePosition(report.id, index)}>
+                      <View style={styles.markerView}>
+                        <Image
+                          source={
+                            report.id === this.state.selectedEventId
+                              ? AppImages.livemarker
+                              : null
+                          }
+                          style={styles.liveMakerImageView}
+                        />
+                        <Image
+                          source={report.image}
+                          style={styles.markerImageView}
+                        />
+                      </View>
+                    </Marker>
+                  ))}
+                </MapView>                
+              </View>
+              <View style={{ width: '100%', height: 49 }}></View>
+              <SafeAreaView />
             </View>
+            <View style={styles.searchMainView}>
+              <View style={styles.descriptionView}>
+                  <TextInput
+                    style={styles.followTxt}
+                    underlineColorAndroid="transparent"
+                    placeholder="Search"
+                    placeholderTextColor="grey"
+                    onChangeText={this.handleInputTextChange}
+                    onTouchStart={()=>  this.setState({ isEvents: true })}
+                  />
+                <Image source={AppImages.search} style={styles.searchIcon} />
+              </View>
+               <SafeAreaView style={styles.imageMainContainer}>
+                  <FlatList
+                  data={this.state.arrPlace}
+                  renderItem={({ item }) => (
+                    <View style={styles.listItemImageMainView}>
+                      <Image
+                            style={styles.listItemImageView}
+                            source={AppImages.fifaresume}
+                      />
+                    </View>
+                  )}
+                  numColumns={3}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+                <View style={styles.bottomPadding} />
+                </SafeAreaView>          
+            </View>      
           </View>
-        </View>
+       </View>
       );
     }
   };
@@ -369,9 +485,7 @@ class Search extends React.Component<ComponentProps, ComponentState> {
   accountListItem = (data: any) => (
     <TouchableWithoutFeedback onPress={() => {
       this.props.viewUser(data.item.id)
-      data.item.id == this.props.userToView && this.props.navigation.navigate('MyProfile', { flowType: 'userToView' })
-
-      // this.props.navigation.navigate('MyProfile') 
+      data.item.id == this.props.userToView && this.props.navigation.navigate('UserProfile', { flowType: 'userToView' })
     }}>
       <View style={styles.list} >
         <View style={styles.listView}>
@@ -391,6 +505,9 @@ class Search extends React.Component<ComponentProps, ComponentState> {
     </TouchableWithoutFeedback>
   );
 
+
+  
+
   render() {
     return (
       <SafeAreaView style={styles.safeView}>
@@ -399,22 +516,7 @@ class Search extends React.Component<ComponentProps, ComponentState> {
           source={AppImages.homeNavigation}
           style={styles.homeNavigationImg}
         />
-        <View style={{ flex: 1 }}>
-          <View style={styles.headerMainView}>
-            <View style={styles.findUserView}>
-              <Text style={styles.findUserTxt}>Find Users</Text>
-              <View style={{ flex: 1 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.goBack();
-                  }}
-                  style={styles.closeView}
-                />
-              </View>
-            </View>
-          </View>
-          <View style={{ flex: 1 }}>{this.segmentControllView()}</View>
-        </View>
+        <View style={{ flex: 1 }}>{this.segmentControllView()}</View>
       </SafeAreaView>
     );
   }
@@ -435,7 +537,6 @@ const mapStateToProps = (state: any) => {
     recommendedUsers: state.user.recommendedUsers,
     getRecommendedUsersError: state.user.getRecommendedUsersError,
     getRecommendedUsersLoading: state.user.getRecommendedUsersLoading,
-    getSearchUsers: state.user.searchUsers,
     userToView: state.user.userToView,
     friendsList: state.user.friendsList,
   };

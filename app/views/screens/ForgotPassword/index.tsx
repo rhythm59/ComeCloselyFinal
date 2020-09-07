@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Alert} from 'react-native';
 
 import {connect} from 'react-redux';
 import TextInput from 'react-native-textinput-with-icons';
@@ -15,13 +15,15 @@ interface ComponentProps {
   navigation: any;
   forgotPasswordError: string;
   isLoading: boolean;
-  forgotPassword(email: string): void;
+  forgotPassword(email: string): void;  
 }
 interface ComponentState {
   email: string;
+  flashMessage: boolean;
 }
 const INITIAL_STATE: ComponentState = {
   email: '',
+  flashMessage: false,
 };
 
 const validationSchema = Yup.object().shape({
@@ -34,10 +36,22 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
     this.state = {...INITIAL_STATE};
   }
 
-  handleSubmit = (values: ComponentState) => {
-    console.log('forgot password sumit', values);
-    this.props.forgotPassword(values.email);
+  handleSubmit = async (values: ComponentState,actions: any) => {
+    try {
+      await this.props.forgotPassword(values.email);
+      this.setState({
+        flashMessage: true,email: ''
+      },()=>{setTimeout(() => this.closeFlashMessage(), 3000)});
+    } catch (error) {
+      actions.setFieldError('general', error.message);
+    }
   };
+
+  closeFlashMessage(){
+    this.setState({
+      flashMessage: false
+    })
+  }
 
   render() {
     const {isLoading} = this.props;
@@ -58,8 +72,8 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
           <Formik
             initialValues={INITIAL_STATE}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              this.handleSubmit(values);
+            onSubmit={(values,actions) => {
+              this.handleSubmit(values,actions);
             }}>
             {(formikProps) => (
               <Fragment>
@@ -90,17 +104,16 @@ class ForgotPassword extends React.Component<ComponentProps, ComponentState> {
                     onPress={formikProps.handleSubmit}
                   />
                 </View>
-                {/* <TouchableHighlight
-                  underlayColor="rgba(0,0,0,0.0)"
-                  style={styles.submitMainView}
-                  onPress={() => {
-                    this.props.navigation.navigate('EnterNewPassword');
-                  }}>
-                  <Text style={styles.submitText}>SUBMIT</Text>
-                </TouchableHighlight> */}
               </Fragment>
             )}
           </Formik>
+          {this.state.flashMessage==true?
+            <View style={styles.flashMessage}>
+              <Text style={{color:'white'}}>Password reset email sent successfully</Text>
+            </View>
+          :
+          null
+          }
         </View>
       </View>
     );

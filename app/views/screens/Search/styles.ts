@@ -1,9 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
 export default StyleSheet.create({
   followTxt: {
     fontSize: 15,
@@ -26,17 +27,18 @@ export default StyleSheet.create({
   },
   descriptionView: {
     height: '90%',
-    width: '100%',
-    borderRadius: 17,
+    width: Math.round(SCREEN_WIDTH * 0.9),
+    borderRadius: 50,
     backgroundColor: '#FFFFFF',
     shadowColor: '#000000',
     shadowOpacity: 0.2,
-    shadowRadius: 6,
+    shadowRadius: 10,
     shadowOffset: {
-      height: 0.5,
+      height: 0.9,
       width: 0.5,
     },
     justifyContent: 'center',
+    elevation: 10,
   },
   searchMainView: {
     width: '90%',
@@ -44,6 +46,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
+    marginTop: 20,
   },
   accountsTxt: {
     textAlign: 'center',
@@ -186,8 +189,8 @@ export default StyleSheet.create({
     height: '100%',
     width: '100%',
     position: 'absolute',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
     overflow: 'hidden',
   },
   mapViewChildView: {
@@ -234,23 +237,29 @@ export default StyleSheet.create({
   markerImageView: {
     width: 60,
     height: 70,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
   markerFlatListMainView: {
+    flexDirection: 'row',
+    width: Math.round(SCREEN_WIDTH),
+    height: Math.round(SCREEN_WIDTH * 0.4),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: 'rgba(255,255,255,0.1)',
     bottom: 20,
-    width: '100%',
     aspectRatio: 3.1,
     position: 'absolute',
     alignSelf: 'flex-start',
   },
   markerListItemMainView: {
-    height: '90%',
+    height: '88%',
     borderRadius: 10,
     flexDirection: 'row',
     alignSelf: 'center',
     aspectRatio: 2.2,
     backgroundColor: 'white',
-    marginLeft: 10,
+    marginLeft: 20,
   },
   listItemImageMainView: {
     height: '90%',
@@ -308,5 +317,45 @@ export default StyleSheet.create({
   },
   dateTextView: {
     color: '#515C6F',
+  },
+  closeIconView: {
+    width: 32,
+    height: 32,
+    resizeMode: 'contain',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    right: 10,
+    marginRight: -100,
+    marginTop: 30,
+    elevation: 1, // works on android
+  },
+  closeIcon: {
+    flex: 1,
+    resizeMode: 'contain',
+    width: 25,
+    height: 25,
+    marginRight: -150,
+    marginTop: 10,
+  },
+   imageMainContainer: {
+    justifyContent: 'center',
+    flex: 1,
+    padding: 5,
+  },
+  imageThumbnailView: {
+    flex: 1 / 3,
+    flexDirection: 'column',
+    margin: 1,
+  },
+  imageThumbnail: {
+    height: 100,
+    borderRadius: 15,
+    marginLeft: 5,
+    marginTop: 2,
+  },
+  bottomPadding: {
+    width: '100%',
+    height: 80,
+    backgroundColor: 'rgba(0,0,0,0)',
   },
 });

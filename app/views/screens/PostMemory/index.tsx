@@ -84,7 +84,7 @@ class PostMemory extends React.Component<ComponentProp, ComponentState> {
 
   handleSubmit = () => {
     const { title, description, location, avatarSource, selected_category } = this.state;
-    // console.log(this.props.currentUser.uid)
+    
     this.setState({ isLoading: true })
     if (title && avatarSource) {
       MemoryServices.saveMemory({
@@ -169,16 +169,13 @@ class PostMemory extends React.Component<ComponentProp, ComponentState> {
                   underlayColor="rgba(0,0,0,0)"
                   onPress={() => {
                     ImagePicker.showImagePicker(options, (response) => {
-                      console.log('Response = ', response);
+                      
                       if (response.didCancel) {
-                        console.log('User cancelled image picker');
+                        
                       } else if (response.error) {
-                        console.log('ImagePicker Error: ', response.error);
+                        
                       } else if (response.customButton) {
-                        console.log(
-                          'User tapped custom button: ',
-                          response.customButton,
-                        );
+                        
                       } else {
                         // const source = { uri: response.uri };
                         // You can also display the image using data:
@@ -292,23 +289,10 @@ const mapDispatchToProps = () => {
 };
 
 const mapStateToProps = (state: any) => {
-  // console.log(state.user.)
+  
   return {
     user: state.user.user,
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostMemory);
-// function WrapPostMemory(props: any) {
-//   return (
-//     <AuthContext.Consumer>
-//       {/* <AuthProvider> */}
-//       {({ currentUser, isLoading }) => (
-//         <PostMemory currentUser={currentUser} {...props} />
-//       )}
-//       {/* </AuthProvider> */}
-//     </AuthContext.Consumer>
-//   )
-// }
-// export default WrapPostMemory;
-// export default PostMemory;

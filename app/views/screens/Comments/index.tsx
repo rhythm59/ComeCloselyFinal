@@ -96,7 +96,6 @@ class Comments extends React.Component<ComponentProps, ComponentState> {
       await MemoryServices.addCommentToMemory(newCommentText, memoryData, user)
 
     } catch (error) {
-      console.log(error)
       this.setState({ isLoading: false, newCommentText: commentMessageBackup })
 
     }
@@ -105,11 +104,8 @@ class Comments extends React.Component<ComponentProps, ComponentState> {
   likeMemoryComment = async (commentData: any) => {
     await MemoryServices.likeDislikeCommentOnMemory(commentData)
   }
-
-  // commentList({ name, message, image, date }: any) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   commentList({ item }) {
-    let likesText = item.likedByUsers ? ((item.likedByUsers.split()?.length) + ' likes') : null
+    let likesText = item.likedByUsers ? ((item.likedByUsers.split(",")?.length) + ' likes') : null
     return (
       <View style={styles.commentContainer}>
         <View style={styles.commentAvatarContainer}>
@@ -240,7 +236,7 @@ class Comments extends React.Component<ComponentProps, ComponentState> {
                             style={styles.postlikeCountTxt}
                             adjustsFontSizeToFit
                             numberOfLines={1}>
-                            {memoryData.likedByUsers ? memoryData.likedByUsers.split()?.length : null}
+                            {memoryData.likedByUsers ? memoryData.likedByUsers.split(",")?.length : null}
                           </Text>
                         </View>
                       </View>

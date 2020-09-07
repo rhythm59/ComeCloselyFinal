@@ -45,14 +45,12 @@ const initialState = {
 
 const eventReducer = createReducer(initialState)({
   [GET_USER_REQUEST]: (state: any) => {
-    console.log('request user');
     return {
       ...state,
       getUserLoading: true,
     };
   },
   [GET_USER_SUCCESS]: (state: any, action: any) => {
-    console.log('success get user');
     return {
       ...state,
       getUserLoading: false,
@@ -61,7 +59,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_USER_FAILED]: (state: any, action: any) => {
-    console.log('failed get user');
     return {
       ...state,
       getEventsLoading: false,
@@ -69,14 +66,12 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_RECOMMENDED_USERS_REQUEST]: (state: any) => {
-    console.log('get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: true,
     };
   },
   [GET_RECOMMENDED_USERS_SUCCESS]: (state: any, action: any) => {
-    console.log('success get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -85,7 +80,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_RECOMMENDED_USERS_FAILED]: (state: any, action: any) => {
-    console.log('failed get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -93,14 +87,12 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_RECOMMENDED_USERS_REQUEST]: (state: any) => {
-    console.log('get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: true,
     };
   },
   [GET_SEARCH_USERS_SUCCESS]: (state: any, action: any) => {
-    console.log('get search users', action.payload);
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -108,7 +100,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_SEARCH_USERS_FAILD]: (state: any, action: any) => {
-    console.log('failed get search users');
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -116,7 +107,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_FOLLOW_USERS_SUCCESS]: (state: any, action: any) => {
-    console.log('failed get search users');
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -124,7 +114,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_FOLLOW_USERS_FAILD]: (state: any, action: any) => {
-    console.log('failed get search users');
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -154,7 +143,6 @@ const eventReducer = createReducer(initialState)({
   [SEND_MESSAGE_SUCCESS]: (state: any, action: any) => {
     return {
       ...state,
-      // userToView: action.payload,
     };
   },
   [GET_MESSAGE_SUCCESS]: (state: any, action: any) => {

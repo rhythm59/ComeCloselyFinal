@@ -61,7 +61,7 @@ class SwitchToEvent extends React.Component<ComponentProps, ComponentState> {
           </View>
         </View>
         <View style={styles.lineView}></View>
-        <ScrollView>
+        <ScrollView style={{width: '100%', height: '88%', alignSelf: 'center'}}>
           <View style={styles.subscriptionView}>
             <Text
               numberOfLines={1}
@@ -76,8 +76,6 @@ class SwitchToEvent extends React.Component<ComponentProps, ComponentState> {
               keyExtractor={(x, i) => i.toString()}
               renderItem={this.renderItem}
             />
-          </View>
-          <View style={styles.bottomMainView}>
             <TouchableOpacity style={styles.bottomView}>
               <Text
                 numberOfLines={1}
@@ -86,6 +84,9 @@ class SwitchToEvent extends React.Component<ComponentProps, ComponentState> {
                 Request an event account
               </Text>
             </TouchableOpacity>
+          </View>
+          <View style={styles.bottomMainView}>
+            
           </View>
         </ScrollView>
       </SafeAreaView>

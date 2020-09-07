@@ -1,4 +1,35 @@
 {
-    "name": "ComeClosely",
-    "displayName": "ComeClosely"
+  "name": "ComeClosely",
+  "displayName": "ComeClosely",
+  // "expo": {
+  //   "name": "ComeClosely",
+  //   "slug": "comeclosely",
+  //   "icon": "./assets/Icon.png",
+  //   "privacy": "unlisted",
+  //   "sdkVersion": "36.0.0",
+  //   "platforms": [
+  //     "ios",
+  //     "android",
+  //     "web"
+  //   ],
+  //   "version": "1.0.0",
+  //   "orientation": "portrait",
+  //   "scheme": "myapp",
+  //   "updates": {
+  //     "fallbackToCacheTimeout": 0
+  //   },
+  //   "assetBundlePatterns": [
+  //     "**/*"
+  //   ],
+  //   "ios": {
+  //     "bundleIdentifier": "com.comeclosely",
+  //     "buildNumber": "1.0.0"
+  //   },
+  //   "android": {
+  //     "package": "com.comeclosely",
+  //     "versionCode": 1
+  //   },
+  //   "description": "",
+  //   "entryPoint": "node_modules/expo/AppEntry.js"
+  // }
 }

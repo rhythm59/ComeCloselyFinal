@@ -20,14 +20,12 @@ const initialState = {
 
 const eventReducer = createReducer(initialState)({
   [GET_USER_REQUEST]: (state: any) => {
-    console.log('request user');
     return {
       ...state,
       getUserLoading: true,
     };
   },
   [GET_USER_SUCCESS]: (state: any, action: any) => {
-    console.log('success get user');
     return {
       ...state,
       getUserLoading: false,
@@ -36,22 +34,19 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_USER_FAILED]: (state: any, action: any) => {
-    console.log('failed get user');
-    return {
+   return {
       ...state,
       getEventsLoading: false,
       getUserError: action.payload.message,
     };
   },
   [GET_RECOMMENDED_USERS_REQUEST]: (state: any) => {
-    console.log('get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: true,
     };
   },
   [GET_RECOMMENDED_USERS_SUCCESS]: (state: any, action: any) => {
-    console.log('success get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: false,
@@ -60,7 +55,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_RECOMMENDED_USERS_FAILED]: (state: any, action: any) => {
-    console.log('failed get recommended users');
     return {
       ...state,
       getRecommendedUsersLoading: false,

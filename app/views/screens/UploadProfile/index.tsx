@@ -72,7 +72,6 @@ class UploadProfile extends React.Component<ComponentProp, ComponentState> {
   }
 
   handleSubmit = (values: FormI) => {
-    console.log('upload photo values', {...values, ...this.props.route.params});
     const creds: Creds = {
       email: this.props.route.params.email,
       password: this.props.route.params.password,
@@ -88,16 +87,14 @@ class UploadProfile extends React.Component<ComponentProp, ComponentState> {
 
   handleShowImagePicker() {
     ImagePicker.showImagePicker(options, (response: ImagePickerResponse) => {
-      console.log('Response = ', response.uri);
+      
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        
+      } else {        
         this.setState({
           avatarSource: response.uri,
           avatarFilePath: response.path,

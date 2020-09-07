@@ -162,7 +162,6 @@ const StoryContainer = (props: ComponentProp) => {
             time={story.createdAt}
             onClosePress={props.onClose}
           />
-          {console.log('story.readMoreUrl:', story.readMoreUrl)}
           {story.readMoreUrl && <ReadMore onReadMore={onReadMoreOpen} />}
 
           <ProgressArray

@@ -230,7 +230,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     height: '10%',
     width: '80%',
-    resizeMode: 'contain',
   },
   creditCardBottomSubView: {
     height: '25%',
@@ -286,6 +285,7 @@ export default StyleSheet.create({
   creditCardBtnMainView: {
     justifyContent: 'center',
     alignSelf: 'flex-start',
+    marginTop: 20,
     height: '100%',
     width: '45%',
   },
@@ -318,6 +318,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginLeft: '10%',
     height: '100%',
+    marginTop: 20,
     width: '45%',
   },
   payPalBtnView: {
@@ -334,16 +335,12 @@ export default StyleSheet.create({
     borderRadius: 5,
   },
   paypalBtnImage: {
-    resizeMode: 'contain',
     height: '60%',
     aspectRatio: 1,
-    alignSelf: 'center',
   },
   paypalLogo: {
-    resizeMode: 'contain',
     height: '50%',
     width: '15%',
-    alignSelf: 'center',
   },
   payPalBtnTxt: {
     alignSelf: 'center',
@@ -490,7 +487,7 @@ export default StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   cardSaveTextInput: {
     marginLeft: 15,
@@ -520,4 +517,7 @@ export default StyleSheet.create({
     marginHorizontal: 25,
     height: 20,
   },
+  cardDataView:{
+    flex: 1
+  }
 });

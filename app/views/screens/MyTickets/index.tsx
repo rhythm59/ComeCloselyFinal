@@ -97,14 +97,11 @@ class MyTickets extends React.Component {
           this.setState({ myTickets })
         })
     } catch (error) {
-      console.log(error)
     }
 
   }
 
   alertItemName = (item: any) => {
-    //alert(item.name);
-    console.log(item.name);
   };
 
   constructor(props: any) {

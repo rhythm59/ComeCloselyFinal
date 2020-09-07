@@ -69,4 +69,14 @@ export default StyleSheet.create({
     borderRadius: 35,
     fontFamily: 'Gilroy-Bold',
   },
+  flashMessage:{
+    position:'absolute', 
+    backgroundColor:'green', 
+    width:'100%', 
+    justifyContent:'center', 
+    alignItems:'center',           
+    height:50, 
+    top:0,
+    fontFamily: 'Gilroy-Bold',
+  }
 });

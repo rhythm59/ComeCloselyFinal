@@ -136,7 +136,7 @@ class Home extends React.Component<ComponentProps> {
   };
 
   alertItemName = (item: any) => {
-    console.log(item.name);
+    
   };
 
   constructor(props: ComponentProps) {
@@ -187,6 +187,7 @@ class Home extends React.Component<ComponentProps> {
 
   render() { 
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+
     return (
       <SideMenu
         menu={menu}
@@ -249,11 +250,11 @@ class Home extends React.Component<ComponentProps> {
                   // data={this.props.memories}
                   data={this.props.memories.sort((a: any, b: any) => b.createdAt > a.createdAt)}
                   keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
+                  renderItem={({ item }) => (  
                     <View
                       key={item.id}
                       style={styles.viewMemories}
-                    /* onPress={() => this.alertItemName(item)} */
+                      onPress={() => this.alertItemName(item)} 
                     >
                       <View style={styles.memoriesMainView}>
                         <ImageBackground
@@ -295,7 +296,7 @@ class Home extends React.Component<ComponentProps> {
                                 style={styles.memoriesLikesCountTxt}
                                 adjustsFontSizeToFit
                                 numberOfLines={1}>
-                                {item.likedByUsers ? item.likedByUsers.split()?.length : null}
+                                {item.likedByUsers ? item.likedByUsers.split(',')?.length : '0'}
                               </Text>
                               <TouchableOpacity
                                 onPress={() => MemoryServices.likeDislikeMemory(item)}
@@ -315,14 +316,14 @@ class Home extends React.Component<ComponentProps> {
                                   style={styles.memoriesProfileNameTxt}
                                   adjustsFontSizeToFit
                                   numberOfLines={1}>
-                                  {item.userName}
+                                  {item.userName} 
                                 </Text>
                               </View>
                               <Text
                                 style={styles.memoriesTimeText}
                                 adjustsFontSizeToFit
                                 numberOfLines={1}>
-                                {timeSince(item.createdAt)}
+                                {timeSince(item.createdAt)} 
                               </Text>
                             </View>
                           </View>

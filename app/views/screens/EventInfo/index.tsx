@@ -11,6 +11,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import styles from './styles';
 import { AppImages } from '../../config';
+import { shareOnFacebook , shareOnTwitter} from 'react-native-social-share';
 
 /* import ActiveImage from '../../../assets/img/selected.png';
 import InActiveImage from '../../../assets/img/unselected.png'; */
@@ -66,6 +67,33 @@ class EventInfo extends React.Component<ComponentProps, ComponentState> {
     return <Image source={imgSource} />;
   };
 
+  tweet(imageurl,name){
+    shareOnTwitter({
+        'text':name,
+        'link':'https://us-central1-comeclosely-71c7c.cloudfunctions.net/',
+        'imagelink':imageurl,
+        'image': 'comeclosely-event',
+      },
+      (results) => {
+        console.log(results);
+      }
+    );
+  }
+
+  facebookShare(imageurl,name){
+    shareOnFacebook({
+        'text':name,
+        'link':'https://us-central1-comeclosely-71c7c.cloudfunctions.net/',
+        'imagelink':imageurl,
+        //or use image
+        'image': 'comeclosely-event',
+      },
+      (results) => {
+        console.log(results);
+      }
+    );
+  }
+
   calculateTotalPrice = () => {
     const {
       AddMorePeopleShowInActiveImage, UnlimitedAlcoholShowInActiveImage,
@@ -113,7 +141,7 @@ class EventInfo extends React.Component<ComponentProps, ComponentState> {
     if (UnlimitedAlcoholShowInActiveImage) {
       ticketData.extras = 'Unlimited Alcohol'
     }
-
+    //console.log(eventData);
     this.props.navigation.navigate('TicketBuy', { eventData, ticketData })
   }
   render() {
@@ -134,13 +162,14 @@ class EventInfo extends React.Component<ComponentProps, ComponentState> {
                     <View style={styles.ShareView}>
                       <View style={styles.ShareChildView}>
                         <View style={styles.SocialIconContainer}>
-                          <Image source={AppImages.facebookcircleicon} />
+                            <TouchableOpacity onPress={() => this.facebookShare(eventData?.coverPhoto,eventData?.title)}>
+                              <Image source={AppImages.facebookcircleicon} />
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.SocialIconContainer}>
-                          <Image source={AppImages.googlecircleicon} />
-                        </View>
-                        <View style={styles.SocialIconContainer}>
-                          <Image source={AppImages.twittercircleicon} />
+                          <TouchableOpacity onPress={() => this.tweet(eventData?.coverPhoto,eventData?.title)}>
+                            <Image source={AppImages.twittercircleicon} />                         
+                          </TouchableOpacity>
                         </View>
                       </View>
                     </View>
@@ -189,7 +218,9 @@ class EventInfo extends React.Component<ComponentProps, ComponentState> {
                       latitude: parseFloat(eventData?.location?.split(',')[1]),
                       latitudeDelta: 0.0922, longitudeDelta: 0.0421,
                     }}
+                    maxZoomLevel={0}
                   >
+                    <View style={{ position: 'absolute', top: 100, left: 50 }}/>
                     <Marker
                       coordinate={{
                         longitude: parseFloat(eventData?.location?.split(',')[0]),

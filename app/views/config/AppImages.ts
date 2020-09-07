@@ -4,11 +4,13 @@ const AppImages = {
   faceBook: require('@assets/img/facebook.png'),
   twitter: require('@assets/img/twitter.png'),
   homeNavigation: require('@assets/img/homenavigation.png'),
+  otherNavigation: require('@assets/img/othernavigation.png'),
   filledHeart: require('@assets/img/heart.png'),
   outlineHeart: require('@assets/img/heartoutline.png'),
   comment: require('@assets/img/message.png'),
   camera: require('@assets/img/camera.png'),
   eventInfoBackground: require('@assets/img/eventinfoback.png'),
+  edit: require('@assets/img/edit.png'),
   increment: require('@assets/img/increment.png'),
   decrement: require('@assets/img/decrement.png'),
   share: require('@assets/img/share.png'),
@@ -23,6 +25,8 @@ const AppImages = {
   myprofile: require('@assets/img/myprofile.png'),
   bottombar: require('@assets/img/bottombar.png'),
   menu: require('@assets/img/menu.png'),
+
+  flag: require('@assets/img/flag-pink.png'),
 
   calendar: require('@assets/img/calendar.png'),
   heartwhite: require('@assets/img/heartwhite.png'),

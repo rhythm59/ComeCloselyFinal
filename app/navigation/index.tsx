@@ -27,6 +27,14 @@ import Messages from '../views/screens/Messages';
 import EnterNewPassword from '../views/screens/EnterNewPassword';
 import MyEvents from '../views/screens/MyEvents';
 import FollowRequests from '../views/screens/FollowRequests';
+
+import Followers from '../views/screens/MyFollowers';
+import Followings from '../views/screens/MyFollowings';
+
+import UserProfile from '../views/screens/UserProfile';
+import FollowingProfile from '../views/screens/FollowingProfile';
+import EditProfile from '../views/screens/EditProfile';
+
 import Notifications from '../views/screens/Notifications';
 import FindUser from '../views/screens/FindUser';
 import AppSettings from '../views/screens/AppSettings';
@@ -102,6 +110,11 @@ function MainStackScreen() {
       <MainStack.Screen name="EnterNewPassword" component={EnterNewPassword} />
       <MainStack.Screen name="MyEvents" component={MyEvents} />
       <MainStack.Screen name="FollowRequests" component={FollowRequests} />
+      <MainStack.Screen name="MyFollowers" component={Followers} />
+      <MainStack.Screen name="MyFollowings" component={Followings} />
+      <MainStack.Screen name="UserProfile" component={UserProfile} />
+      <MainStack.Screen name="FollowingProfile" component={FollowingProfile} />
+      <MainStack.Screen name="EditProfile" component={EditProfile} />
       <MainStack.Screen name="Notifications" component={Notifications} />
       <MainStack.Screen name="FindUser" component={FindUser} />
       <MainStack.Screen name="AppSettings" component={AppSettings} />
@@ -142,7 +155,6 @@ function BottomTabNavigator({ navigation }: any) {
       tabBarOptions={{
         showIcon: true,
         showLabel: false,
-
         style: {
           backgroundColor: 'rgba(0,0,0,0)',
           position: 'absolute',
@@ -190,8 +202,6 @@ function BottomTabNavigator({ navigation }: any) {
       <BottomTab.Screen
         name="PostMemory"
         component={PostMemory}
-        // name="CreateEvent"
-        // component={CreateEvent}
         options={{
           tabBarIcon: () => {
             return (
@@ -229,11 +239,10 @@ function BottomTabNavigator({ navigation }: any) {
           tabBarIcon: () => {
             return <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
               onPress={() => {
-                console.log('currentUser nav:', currentUser)
                 dispatch(userOperations.getUser(currentUser.uid));
                 dispatch(userOperations.viewUser(null))
               }}>
-              <Image source={{ uri: currentUser.photoURL || getGravatarSrc(currentUser.displayName || currentUser.email) }} style={styles.icon} />
+              <Image source={{ uri: currentUser.photoURL || getGravatarSrc(currentUser.displayName || currentUser.email) }} style={[styles.icon, styles.profileIcon]} />
             </TouchableOpacity>;
           },
         }}

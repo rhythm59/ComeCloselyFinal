@@ -20,6 +20,7 @@ function Menu({ onItemSelected, ...props }: any) {
         <View style={styles.avatarContainer}>
           <Image style={styles.avatar} source={{ uri: props.user.displayPhoto || uri }} />
           <Text style={styles.name}>{props.user.name}</Text>
+          <Image source={AppImages.verify} style={styles.verified} />
         </View>
 
         <View style={styles.itemsMainView}>
@@ -29,7 +30,7 @@ function Menu({ onItemSelected, ...props }: any) {
               onPress={() => onItemSelected('CreateEvent')}
               style={{ flex: 1 }}>
               <View style={styles.myEventView}>
-                <Image source={AppImages.entry} style={[styles.itemimage, { tintColor: 'white' }]} />
+                <Image source={AppImages.calendar} style={[styles.itemimage, { tintColor: 'white' }]} />
                 <Text style={styles.item}> Create Event</Text>
               </View>
             </TouchableOpacity>
@@ -40,26 +41,12 @@ function Menu({ onItemSelected, ...props }: any) {
               onPress={() => onItemSelected('MyEvents')}
               style={{ flex: 1 }}>
               <View style={styles.myEventView}>
-                <Image source={AppImages.calendar} style={styles.itemimage} />
+                <Image source={AppImages.heartwhite} style={styles.itemimage} />
                 <Text style={styles.item}> My Events</Text>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.viewitem}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => onItemSelected('MyEvents')}
-              style={{ flex: 1 }}>
-              <View style={styles.myEventView}>
-                <Image
-                  source={AppImages.heartwhite}
-                  style={styles.itemimage}
-                  resizeMode="stretch"
-                />
-                <Text style={styles.item}> Saved Events</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          
           <View style={styles.viewitem}>
             <TouchableOpacity
               activeOpacity={0.7}
@@ -90,28 +77,6 @@ function Menu({ onItemSelected, ...props }: any) {
               <View style={styles.myEventView}>
                 <Image source={AppImages.settings} style={styles.itemimage} />
                 <Text style={styles.item}> Settings</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.viewitem}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => onItemSelected('FollowRequests')}
-              style={{ flex: 1 }}>
-              <View style={styles.myEventView}>
-                <View style={styles.itemimage} />
-                <Text style={styles.item}> Follow Requests</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.viewsetting}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => onItemSelected('Notifications')}
-              style={{ flex: 1 }}>
-              <View style={styles.myEventView}>
-                <View style={styles.itemimage} />
-                <Text style={styles.item}> Notifications</Text>
               </View>
             </TouchableOpacity>
           </View>

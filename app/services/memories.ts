@@ -33,7 +33,7 @@ const likeDislikeCommentOnMemory = async (commentData: any) => {
     try {
         let userId = auth().currentUser?.uid
         let { id, likedByUsers = '', ...rest } = commentData;
-        likedByUsers = likedByUsers?.split()
+        likedByUsers = likedByUsers?.split(",")
         const index = likedByUsers?.indexOf(userId);
         if (userId && index > -1) {//dislike  
             likedByUsers.splice(index, 1);
@@ -43,11 +43,9 @@ const likeDislikeCommentOnMemory = async (commentData: any) => {
             likedByUsers = likedByUsers.join()
             likedByUsers = likedByUsers ? (likedByUsers + ',' + userId) : (userId + "");
         }
-        const memoriesRef = firestore().collection('memoryComments').doc(id);
-        console.log('likedByUsers', likedByUsers)
+        const memoriesRef = firestore().collection('memoryComments').doc(id);        
         return await memoriesRef.update({ likedByUsers })
-    } catch (error) {
-        console.error(error)
+    } catch (error) {        
         return error;
     }
 }
@@ -55,18 +53,16 @@ const likeDislikeMemory = async (memoryData: any) => {
     try {
         let userId = auth().currentUser?.uid
         let { id, likedByUsers = '', ...rest } = memoryData;
-        likedByUsers = likedByUsers?.split()
+        likedByUsers = likedByUsers?.split(",")
         const index = likedByUsers?.indexOf(userId);
-        if (userId && index > -1) {//like 
-            // console.error(likedByUsers)
+        if (userId && index > -1) {//like             
             likedByUsers.splice(index, 1);
             return await updateMemoryById(memoryData.id, {
                 ...rest,
                 likedByUsers: likedByUsers ? likedByUsers.join() : '',
                 updatedAt: Date.now()
             })
-        }
-        else if (userId) {//like  
+        }else if (userId) {//like  
             likedByUsers = likedByUsers.join()
             likedByUsers = likedByUsers ? (likedByUsers + ',' + userId) : (userId + "")
             return await updateMemoryById(memoryData.id, {
@@ -76,7 +72,6 @@ const likeDislikeMemory = async (memoryData: any) => {
             })
         }
     } catch (error) {
-        console.error(error)
         return error;
     }
 }
@@ -113,8 +108,6 @@ const saveMemory = async (data: any) => {
             commentsCounter: 0
         };
         await memoriesRef.set(data);
-        // firestore().collection('memoriesLikes').doc(memoriesRef.id).set([])
-        // firestore().collection('memoriesComments').doc(memoriesRef.id).set([])
         return data;
     } catch (error) {
         return error

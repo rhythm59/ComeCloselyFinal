@@ -30,14 +30,12 @@ const initialState = {
 
 const eventReducer = createReducer(initialState)({
   [GET_EVENT_TYPES_REQUEST]: (state: any) => {
-    console.log('request event types');
     return {
       ...state,
       getEventTypesLoading: true,
     };
   },
   [GET_EVENT_TYPES_SUCCESS]: (state: any, action: any) => {
-    console.log('success get event types');
     return {
       ...state,
       getEventTypesError: null,
@@ -46,7 +44,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_EVENT_TYPES_FAILED]: (state: any, action: any) => {
-    console.log('failed get event types');
     return {
       ...state,
       getEventTypesError: action.payload.message,
@@ -54,14 +51,12 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_EVENTS_REQUEST]: (state: any) => {
-    console.log('request event types');
     return {
       ...state,
       getEventsLoading: true,
     };
   },
   [GET_EVENTS_SUCCESS]: (state: any, action: any) => {
-    console.log('success get event types');
     return {
       ...state,
       getEventsError: null,
@@ -70,7 +65,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [GET_EVENTS_FAILED]: (state: any, action: any) => {
-    console.log('failed get event types');
     return {
       ...state,
       getEventsError: action.payload.message,
@@ -78,14 +72,12 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [ADD_EVENT_REQUEST]: (state: any) => {
-    console.log('request add event');
     return {
       ...state,
       addEventLoading: true,
     };
   },
   [ADD_EVENT_SUCCESS]: (state: any) => {
-    console.log('success add event');
     return {
       ...state,
       addEventError: null,
@@ -93,7 +85,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [ADD_EVENT_FAILED]: (state: any, action: any) => {
-    console.log('failed add event');
     return {
       ...state,
       addEventError: action.payload.message,
@@ -101,14 +92,12 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [DELETE_EVENT_REQUEST]: (state: any) => {
-    console.log('request delete event');
     return {
       ...state,
       deleteEventLoading: true,
     };
   },
   [DELETE_EVENT_SUCCESS]: (state: any) => {
-    console.log('success delete event');
     return {
       ...state,
       deleteEventError: null,
@@ -116,7 +105,6 @@ const eventReducer = createReducer(initialState)({
     };
   },
   [DELETE_EVENT_FAILED]: (state: any, action: any) => {
-    console.log('failed delete event');
     return {
       ...state,
       deleteEventError: action.payload.message,

@@ -121,16 +121,13 @@ class PostStory extends React.Component<ComponentProp, ComponentState> {
                                     underlayColor="rgba(0,0,0,0)"
                                     onPress={() => {
                                         ImagePicker.showImagePicker(options, (response) => {
-                                            console.log('Response = ', response);
+                                           
                                             if (response.didCancel) {
-                                                console.log('User cancelled image picker');
+                                               
                                             } else if (response.error) {
-                                                console.log('ImagePicker Error: ', response.error);
+                                                
                                             } else if (response.customButton) {
-                                                console.log(
-                                                    'User tapped custom button: ',
-                                                    response.customButton,
-                                                );
+                                                
                                             } else {
                                                 // const source = { uri: response.uri };
                                                 // You can also display the image using data:

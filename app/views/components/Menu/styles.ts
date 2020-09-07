@@ -10,6 +10,9 @@ export default StyleSheet.create({
     marginLeft: 20,
     aspectRatio: 1.4,
     width: '90%',
+    marginTop: '5%',
+    alignItems: 'center',
+    alignSelf:'center'
   },
   avatar: {
     marginTop: 10,
@@ -50,7 +53,7 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0)',
-    marginTop: 5,
+    marginLeft: 5,
   },
   itemrateus: {
     fontSize: 16,
@@ -71,5 +74,12 @@ export default StyleSheet.create({
   myEventView: {
     flex: 1,
     flexDirection: 'row',
+  },
+  verified: {
+    marginTop: -25,
+    marginLeft: 100,
+    height: 25,
+    width: 25,
+    resizeMode: 'contain',
   },
 });

@@ -21,10 +21,6 @@ import { AuthContext } from '../../../providers/auth';
 import { UserServices, ChatroomServices } from '../../../services/';
 import { formatAMPM } from '../../../utils';
 
-
-
-// const SCREEN_WIDTH = Dimensions.get('window').width;
-// export default Component Messages({ navigation }: any) {
 class Messages extends Component {
   state = {
     input: '',
@@ -46,7 +42,6 @@ class Messages extends Component {
     });
     const userKey = this.context.currentUser.uid;
     const otherUserKey = this.props.userToView;
-    console.log(otherUserKey)
     this.props.getUser(otherUserKey)
     let chatroomData = await ChatroomServices.getChatroomByUsers(userKey, otherUserKey)
     // const chatroomId = this.props.route?.params?.chatroomId || generateNewChatRoomKey(userKey, otherUserKey);
@@ -124,7 +119,7 @@ class Messages extends Component {
               <View style={{ flex: 1 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.goBack();
+                    this.props.navigation.navigate('Messenger')
                   }}
                   style={styles.closeButtonView}>
                   <Image source={AppImages.close} style={styles.closeImg}></Image>
@@ -177,7 +172,6 @@ const mapDispatchToProps = (dispatch: Function) => {
 };
 
 const mapStateToProps = (state: any) => {
-  console.log(state)
   return {
     user: state.user.user,
     userToView: state.user.userToView,

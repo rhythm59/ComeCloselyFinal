@@ -15,7 +15,6 @@ class AuthProvider extends Component<{}, AuthContextI> {
   state = {...INITIAL_STATE};
 
   onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
-    console.log(user);
     this.setState({currentUser: user});
     this.setState({isLoading: false});
   };
